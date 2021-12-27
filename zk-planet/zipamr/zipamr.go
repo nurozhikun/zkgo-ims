@@ -6,6 +6,10 @@ import (
 	"github.com/nurozhikun/zkgo-ims/zk-planet/zipamr/amrdb"
 )
 
+const (
+	DeviceID_tcpListener = "tcp_listener"
+)
+
 type ZipAmr struct {
 	AddrTcpListener string
 	zdev.Vessel
@@ -20,6 +24,13 @@ func (amr *ZipAmr) InitDB(cfg *zsql.Cfg) *ZipAmr {
 func (amr *ZipAmr) InitDevs() *ZipAmr {
 	amr.start()
 	//append the device of TcpListener
+	node := &zdev.VirtualNode{
+		ID:     DeviceID_tcpListener,
+		Addr:   ":8000",
+		Stream: zdev.NewStreamTcpListener(),
+		Custom: zdev.NewCustomTcpListener(func() zdev.ICustom { return nil }),
+	}
+	zdev.CreateDevInVessel(node, &amr.Vessel)
 	return amr
 }
 
@@ -29,12 +40,12 @@ func (amr *ZipAmr) FreeAll() {
 }
 
 func (amr *ZipAmr) start() {
-	amr.Vessel.FnCreateCustom = func(code int64, cmd *zdev.Command) zdev.ICustom {
-		return nil
-	}
-	amr.Vessel.FnCreateStream = func(code int64, cmd *zdev.Command) zdev.IStream {
-		return nil
-	}
+	// amr.Vessel.FnCreateCustom = func(code int64, cmd *zdev.Command) zdev.ICustom {
+	// 	return nil
+	// }
+	// amr.Vessel.FnCreateStream = func(code int64, cmd *zdev.Command) zdev.IStream {
+	// 	return nil
+	// }
 	amr.Vessel.Start()
 }
 
