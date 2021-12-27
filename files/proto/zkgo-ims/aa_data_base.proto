@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package imspbf;
+option optimize_for = LITE_RUNTIME;
+option java_package = "ims.pbf";
+option go_package = "gims/gatom/pbf";
+
+enum ReturnCode {
+    ReturnCodeSuccess = 0;
+    ReturnCodeError = -1;
+}
+
+message Position {
+    float x = 1;
+    float y = 2;
+}
+
+message EntityBase {
+    string code = 1;
+    string name = 2;
+}
+
+message DeviceBase {
+    string code = 1;
+    string name = 2;
+    int32 life_cycle = 3;
+    string area_code = 4;
+    int32 type = 5;
+}
+
+message DeviceDetail {
+    string code = 1;
+    string name = 2;
+    string addr = 3;
+    int32 port = 4;
+    string pos_code = 5;//set code
+}
+
+message DeviceReal {
+    string code = 1;
+    string name = 2;
+    string cur_code = 3;
+    Position pos = 4;
+}
+
+message AmrReal {
+    DeviceReal device = 1;
+    string last_pos_code = 5;
+    string next_pos_code = 6;
+    int32 percent_to_next = 7;//0 ~ 100
+}
+
+message MapDetail {
+    string code = 1;
+    string name = 2;
+}
+
+message MapLine {
+    int64 id = 1;
+    int64 to_point_id = 2;
+    float distance = 3;
+}
+
+message MapPoint {
+    string code = 1;
+    string name = 2;
+    int32 type = 3;
+    int64 id = 4;
+    repeated MapLine lines = 5;
+    Position  point = 6;
+}

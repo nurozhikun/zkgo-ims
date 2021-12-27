@@ -1,0 +1,1 @@
+C:/protobuf/bin/protoc.exe -I"./gims/" --cpp_out="../../../gene/genelib/src/zqpbf/pbf/" "./gims/aa_data_base.proto" "./gims/amr_binary.proto" 

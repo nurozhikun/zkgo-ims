@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+package protbee;
+option optimize_for = LITE_RUNTIME;
+option java_package = "protbee.pbf";
+option go_package = "zk-atom/zipbf/protbee";

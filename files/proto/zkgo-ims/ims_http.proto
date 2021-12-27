@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+import "aa_data_base.proto";
+// import "aa_http_base.proto";
+
+package imspbf;
+option optimize_for = LITE_RUNTIME;
+option java_package = "ims.pbf";
+option go_package = "gims/gatom/pbf";
+
+
+// GET/POST /device/list
+message ReqBodyDeviceList {
+    int32 lift_cycle = 1;
+    repeated string area_codes = 2;
+    string code = 3;//device code
+    int32 type = 4;
+}
+message ResBodyDeviceList {
+    repeated DeviceBase devices = 1;
+}
+
+// cmd = ImsDeviceDetail
+// GET/POST /device/detail
+message ReqBodyDeviceDetails {
+    repeated string codes = 1;
+}
+
+message ResBodyDeviceDetails {
+    repeated DeviceDetail devices = 1;
+}
+
+//Cmd=ImsDeviceDetail
+//

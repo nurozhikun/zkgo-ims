@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package imspbf;
+option optimize_for = LITE_RUNTIME;
+option java_package = "ims.pbf";
+option go_package = "gims/gatom/pbf";
+
+
+enum ResponseCode {
+    ReturnSuccess = 0;
+    ReturnFailure = 1;
+    ReturnError = -1;
+}
+
+enum ReqCmd {
+    CmdUnknown = 0;
+    //for Amr
+    CmdMapList = 1;
+    CmdMapDetail = 2;
+    CmdAmrInfo = 100;
+    // ImsBase = 100000;
+    ImsDevicesListAll = 100000;//所有的
+    ImsDevicesListSameByDevice = 100001;//在同一个场地
+    ImsDevicesListOfArea = 100002;//指定区域
+    ImsDeviceDetail = 100010;
+    // CmdDeviceDetail = 100;
+    // CmdDevicesListAll = 101;
+    // CmdDevicesListByType = 102;
+    // CmdDevicesListByArea = 103;
+}
+
+message Header {
+    int32 cmd = 1;//value is ReqCmd
+    int64 timestamp = 2;
+    string jwt = 3;
+}
+
+message Tailer {
+    int32 code = 1;//value is ResponseCode
+    string error = 2;
+}
+
+message ReqBody {
+    Header header = 1;
+}
+
+message ReqBodyCommon { 
+    int32 type = 2;
+    int32 status = 3;
+    string code = 4;
+}
+
+
+// message ResBodyCommon {
+//     Header header = 1;
+//     Header tailer = 2;
+// }

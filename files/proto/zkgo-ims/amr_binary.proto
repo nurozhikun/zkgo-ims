@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+import "aa_data_base.proto";
+
+package imspbf;
+option optimize_for = LITE_RUNTIME;
+option java_package = "ims.pbf";
+option go_package = "gims/gatom/pbf";
+
+
+// message BinHeader{
+//     bytes headermarker = 1;//固定长度的数据
+//     uint64 id = 2;//包的id
+//     uint64 stamp = 3;//包请求的timestamp， ms from 1970.01.01
+//     uint32 cmd = 4;
+//     uint32 bodylen = 5;
+// }
+
+message BinMapList {
+    repeated MapDetail maps = 1;
+};

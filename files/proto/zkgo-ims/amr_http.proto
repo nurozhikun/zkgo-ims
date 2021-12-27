@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+import "aa_data_base.proto";
+// import "aa_http_base.proto";
+
+package imspbf;
+option optimize_for = LITE_RUNTIME;
+option java_package = "ims.pbf";
+option go_package = "gims/gatom/pbf";
+
+
+
+//Get/Post /amr/real
+//AmrReal
+
+//Get/Post /amr/map/list
+//ReqBodyMapList = ReqBodyCommon
+message ResBodyMapList {
+    repeated EntityBase maps = 1;
+}
+
+//Get/Post /amr/map/detail
+//MapDetail
+
+//Get/Post /amr/task/trunks
+
+//Get/Post /amr/task/trunknodes

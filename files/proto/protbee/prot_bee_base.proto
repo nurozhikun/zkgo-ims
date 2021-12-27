@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package protbee;
+option optimize_for = LITE_RUNTIME;
+option java_package = "protbee.pbf";
+option go_package = "zk-atom/zipbf/protbee";
+
+//unit message
+message Point2F {
+    float x = 1;
+    float y = 2;
+}
+
+message Point3F {
+    float x = 1;
+    float y = 2;
+    float z = 3;
+}
+
+//for http request and response
+message Header {
+    int64 cmd = 1;
+    int64 timestamp = 2;
+    string jew = 3;
+}
+
+message Tailer {
+    int64 code = 1;//0 is success
+    string error = 2;
+}
