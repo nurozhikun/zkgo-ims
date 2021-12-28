@@ -146,7 +146,7 @@ type Header struct {
 	unknownFields protoimpl.UnknownFields
 
 	Cmd       int64  `protobuf:"varint,1,opt,name=cmd,proto3" json:"cmd,omitempty"`
-	Timestamp int64  `protobuf:"varint,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Timestamp int64  `protobuf:"varint,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"` //ms
 	Jwt       string `protobuf:"bytes,3,opt,name=jwt,proto3" json:"jwt,omitempty"`
 }
 

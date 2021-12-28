@@ -18,7 +18,13 @@ type IIrisBeeApi interface {
 	IrisBeeHandle(key int) func(ctx znet.IrisCtx)
 }
 
-func InstallIrisBeeHandle(api IIrisBeeApi, party znet.IrisParty, cmd int) {
+func InstallIrisBeeHandles(api IIrisBeeApi, party znet.IrisParty, cmds ...int) {
+	for _, cmd := range cmds {
+		installOneIrisBeeHandle(api, party, cmd)
+	}
+}
+
+func installOneIrisBeeHandle(api IIrisBeeApi, party znet.IrisParty, cmd int) {
 	f := api.IrisBeeHandle(cmd)
 	if nil == f {
 		return

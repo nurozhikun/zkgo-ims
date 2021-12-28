@@ -39,6 +39,14 @@ func CopyHeader(ctx znet.IrisCtx) {
 
 }
 
+func ParseBody(ctx znet.IrisCtx, msg zproto.Message) error {
+	bs, err := ctx.GetBody()
+	if nil != err {
+		return err
+	}
+	return zproto.UnmarshalString(bs, msg)
+}
+
 func ResponseError(ctx znet.IrisCtx, err error, code int) {
 	if err != nil {
 		if n := zutils.ErrorCode(err); 0 != n {

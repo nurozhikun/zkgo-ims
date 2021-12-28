@@ -26,6 +26,8 @@ func (a *AmrHttpApi) InstallPath(cmds ...int) {
 	//install map apis
 	party := a.app.Party("/map")
 	{
-		ziapi.InstallIrisBeeHandle(a.apiMap, party, apias.Cmd_MapThumbnails)
+		ziapi.InstallIrisBeeHandles(a.apiMap, party,
+			apias.Cmd_MapThumbnails,
+			apias.Cmd_MapOneDetail)
 	}
 }
