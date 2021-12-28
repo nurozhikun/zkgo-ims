@@ -20,11 +20,20 @@ message Point3F {
 //for http request and response
 message Header {
     int64 cmd = 1;
-    int64 timestamp = 2;
-    string jew = 3;
+    int64 timestamp = 2;//ms
+    string jwt = 3;
 }
 
 message Tailer {
     int64 code = 1;//0 is success
     string error = 2;
+}
+
+//thumbnail
+
+message Thumbnail {
+    string code = 1;
+    string name = 2;
+    int32 type = 3;
+    int32 life_cycle = 4;
 }

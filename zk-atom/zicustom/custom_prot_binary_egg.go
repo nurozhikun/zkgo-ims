@@ -17,14 +17,23 @@ var (
 	DefTailMarker = []byte{0xFF, 0xFE, 0xFD, 0xFC}
 )
 
+func NewCustProtBinaryEgg() *CustProtBinaryEgg {
+	return &CustProtBinaryEgg{
+		HeadMarker:  DefHeadMarker,
+		TailMarker:  DefTailMarker,
+		MinPackSize: int32(len(DefHeadMarker) + len(DefTailMarker) + headSize + tailsize),
+		MaxPackSize: 4 * 1024,
+	}
+}
+
 type CustProtBinaryEgg struct {
 	zdev.CustomBase
 	HeadMarker   []byte //everyone is different
 	TailMarker   []byte
 	CurHead      EggHead
 	FnDecodeBody func(body []byte, cmd *zdev.Command) error
-	minPackSize  int32
-	maxPackSize  int32
+	MinPackSize  int32
+	MaxPackSize  int32
 	buffers      []byte
 }
 
@@ -76,7 +85,7 @@ func (p *CustProtBinaryEgg) getOnePackage(in []byte) (body []byte, unfinished bo
 	} else {
 		buff = p.buffers
 	}
-	if len(buff) < int(p.minPackSize) {
+	if len(buff) < int(p.MinPackSize) {
 		return nil, false, nil
 	}
 	i := bytes.Index(buff, p.HeadMarker)
@@ -88,7 +97,7 @@ func (p *CustProtBinaryEgg) getOnePackage(in []byte) (body []byte, unfinished bo
 		buff = buff[i:]
 		i = 0
 	}
-	if len(buff) < int(p.minPackSize) {
+	if len(buff) < int(p.MinPackSize) {
 		p.cachedBuff(buff)
 		return nil, false, nil
 	}

@@ -1,6 +1,12 @@
 syntax = "proto3";
 
+import "prot_bee_base.proto";
+
 package protbee;
 option optimize_for = LITE_RUNTIME;
 option java_package = "protbee.pbf";
 option go_package = "zk-atom/zipbf/protbee";
+
+message ResMapThumbnails {
+    repeated Thumbnail thumbnails = 1;
+}

@@ -3,6 +3,7 @@ $name = "C:/protobuf/bin/protoc.exe "
 $name += ' -I"./protbee/"'
 $name += ' --go_out="../../"'
 $name += ' "./protbee/prot_bee_base.proto"'
+$name += ' "./protbee/prot_bee_body_map.proto"'
 echo $name
 cmd /C $name
 #  --dart_out="../../../sieflutter/fzksie/lib/pbf" 
