@@ -9,7 +9,7 @@ const (
 	HKeyCode      = znet.ZkCode
 	HKeyError     = znet.ZkError
 	HKeyHeader    = znet.ZkHeader
-	HKeyTailer    = znet.ZkTailer
+	// HKeyTailer    = znet.ZkTailer
 )
 
 const (

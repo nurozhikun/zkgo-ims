@@ -12,11 +12,24 @@ import (
 )
 
 func ParserHeader(ctx znet.IrisCtx) (header *zipbf.BeeHeader, err error) {
+	header = &zipbf.BeeHeader{}
+	s := ctx.GetHeader(netas.HKeyHeader)
+	if len(s) > 0 {
+		zproto.UnmarshalString([]byte(s), header)
+	}
+	header.Cmd, _ = zutils.InterfaceToInt(ctx.GetHeader(netas.HKeyCmd))
+	header.Timestamp, _ = zutils.InterfaceToInt(ctx.GetHeader(netas.HKeyTimestamp))
+	header.Jwt = ctx.GetHeader(netas.HKeyJwt)
+	header.Code, _ = zutils.InterfaceToInt(ctx.GetHeader(netas.HKeyCode))
+	header.Error = ctx.GetHeader(netas.HKeyError)
 	return
 }
 
-func SetHeader(ctx znet.IrisCtx, header *zipbf.BeeHeader) {
+func SetHeader(ctx znet.IrisCtx, header *zipbf.BeeHeader, err error) {
 	if nil != header {
+		if nil != err {
+			zipbf.SetBeeHeaderError(header, err)
+		}
 		header.Timestamp = time.Now().UTC().UnixMilli()
 		if netas.UseBase64 {
 			js := zproto.MarshalString(header)
@@ -26,17 +39,21 @@ func SetHeader(ctx znet.IrisCtx, header *zipbf.BeeHeader) {
 		ctx.Header(netas.HKeyCmd, zutils.StringFromInterface(header.Cmd))
 		ctx.Header(netas.HKeyTimestamp, zutils.StringFromInterface(header.Timestamp))
 		ctx.Header(netas.HKeyJwt, header.Jwt)
+		ctx.Header(netas.HKeyCode, zutils.StringFromInterface(header.Code))
+		ctx.Header(netas.HKeyError, header.Error)
 	} else {
 		CopyHeader(ctx)
+		if nil != err {
+			ctx.Header(netas.HKeyCode, zutils.StringFromInterface(zutils.ErrorCode(err)))
+			ctx.Header(netas.HKeyError, err.Error())
+		}
 	}
 }
 
 func CopyHeader(ctx znet.IrisCtx) {
-	// ctx.Header(netas.HKeyCmd, ctx.GetHeader(netas.HKeyCmd))
 	znet.IrisCopyHeaderKeys(ctx, netas.HKeyCmd, netas.HKeyJwt)
 	t := time.Now().UTC().UnixMilli()
 	ctx.Header(netas.HKeyTimestamp, zutils.StringFromInterface(t))
-
 }
 
 func ParseBody(ctx znet.IrisCtx, msg zproto.Message) error {
@@ -45,23 +62,4 @@ func ParseBody(ctx znet.IrisCtx, msg zproto.Message) error {
 		return err
 	}
 	return zproto.UnmarshalString(bs, msg)
-}
-
-func ResponseError(ctx znet.IrisCtx, err error, code int) {
-	if err != nil {
-		if n := zutils.ErrorCode(err); 0 != n {
-			code = n
-		}
-	}
-	ctx.Header(netas.HKeyError, err.Error())
-	szcode, _ := zutils.InterfaceToString(code)
-	ctx.Header(netas.HKeyCode, szcode)
-	if netas.UseBase64 {
-		tailer := &zipbf.BeeTailer{
-			Code:  int64(code),
-			Error: err.Error(),
-		}
-		js := zproto.MarshalString(tailer)
-		ctx.Header(netas.HKeyTailer, base64.StdEncoding.EncodeToString([]byte(js)))
-	}
 }

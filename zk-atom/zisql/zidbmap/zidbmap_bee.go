@@ -3,6 +3,7 @@ package zidbmap
 import (
 	"fmt"
 
+	"gitee.com/sienectagv/gozk/zlogger"
 	"gitee.com/sienectagv/gozk/zproto"
 	"gitee.com/sienectagv/gozk/zutils"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/zipbf"
@@ -11,15 +12,16 @@ import (
 
 //@reqBody is nil
 //@return &protbee.MapThumbnails{}
-func (db *DB) BeeResThumbnails(header *zipbf.BeeHeader, reqBody zproto.Message) (zproto.Message, error) {
+func (db *DB) BeeMapThumbnails(header *zipbf.BeeHeader, reqBody zproto.Message) (zproto.Message, error) {
 	body := &protbee.MapThumbnails{}
 	//TODO read data from zidbmap then fill body
+	zlogger.Info("test in BeeMapThumbnails")
 	return body, nil
 }
 
 //@reqBody is zipbf.BeeThumbnail
-func (db *DB) BeeResOneDetail(header *zipbf.BeeHeader, resBody zproto.Message) (zproto.Message, error) {
-	thumbnail, ok := resBody.(*protbee.Thumbnail)
+func (db *DB) BeeMapOneDetail(header *zipbf.BeeHeader, reqBody zproto.Message) (zproto.Message, error) {
+	thumbnail, ok := reqBody.(*protbee.Thumbnail)
 	if !ok {
 		return nil, zutils.NewError(-1, "the req body is nil")
 	}

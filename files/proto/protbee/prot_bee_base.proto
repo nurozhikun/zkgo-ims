@@ -22,6 +22,10 @@ message Header {
     int64 cmd = 1;
     int64 timestamp = 2;//ms
     string jwt = 3;
+    int64 code = 4;
+    string error = 5;
+    int64 body_total = 6;
+    int64 body_idx = 7;
 }
 
 message Tailer {
@@ -29,11 +33,3 @@ message Tailer {
     string error = 2;
 }
 
-//thumbnail
-
-message Thumbnail {
-    string code = 1;
-    string name = 2;
-    int32 type = 3;
-    int32 life_cycle = 4;
-}

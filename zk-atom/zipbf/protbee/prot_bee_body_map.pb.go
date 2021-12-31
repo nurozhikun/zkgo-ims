@@ -4,6 +4,8 @@
 // 	protoc        v3.12.3
 // source: prot_bee_body_map.proto
 
+// import "prot_bee_base.proto";
+
 package protbee
 
 import (
@@ -20,6 +22,189 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type Login struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	User     string `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	Password string `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+}
+
+func (x *Login) Reset() {
+	*x = Login{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_prot_bee_body_map_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Login) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Login) ProtoMessage() {}
+
+func (x *Login) ProtoReflect() protoreflect.Message {
+	mi := &file_prot_bee_body_map_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Login.ProtoReflect.Descriptor instead.
+func (*Login) Descriptor() ([]byte, []int) {
+	return file_prot_bee_body_map_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *Login) GetUser() string {
+	if x != nil {
+		return x.User
+	}
+	return ""
+}
+
+func (x *Login) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+type LoginAck struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	User string `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	// string jwt = 2;
+	Permissions []string `protobuf:"bytes,3,rep,name=permissions,proto3" json:"permissions,omitempty"`
+}
+
+func (x *LoginAck) Reset() {
+	*x = LoginAck{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_prot_bee_body_map_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *LoginAck) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginAck) ProtoMessage() {}
+
+func (x *LoginAck) ProtoReflect() protoreflect.Message {
+	mi := &file_prot_bee_body_map_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginAck.ProtoReflect.Descriptor instead.
+func (*LoginAck) Descriptor() ([]byte, []int) {
+	return file_prot_bee_body_map_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *LoginAck) GetUser() string {
+	if x != nil {
+		return x.User
+	}
+	return ""
+}
+
+func (x *LoginAck) GetPermissions() []string {
+	if x != nil {
+		return x.Permissions
+	}
+	return nil
+}
+
+//thumbnail
+type Thumbnail struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code      string `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Name      string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Type      int32  `protobuf:"varint,3,opt,name=type,proto3" json:"type,omitempty"`
+	LifeCycle int32  `protobuf:"varint,4,opt,name=life_cycle,json=lifeCycle,proto3" json:"life_cycle,omitempty"`
+}
+
+func (x *Thumbnail) Reset() {
+	*x = Thumbnail{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_prot_bee_body_map_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Thumbnail) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Thumbnail) ProtoMessage() {}
+
+func (x *Thumbnail) ProtoReflect() protoreflect.Message {
+	mi := &file_prot_bee_body_map_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Thumbnail.ProtoReflect.Descriptor instead.
+func (*Thumbnail) Descriptor() ([]byte, []int) {
+	return file_prot_bee_body_map_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *Thumbnail) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *Thumbnail) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Thumbnail) GetType() int32 {
+	if x != nil {
+		return x.Type
+	}
+	return 0
+}
+
+func (x *Thumbnail) GetLifeCycle() int32 {
+	if x != nil {
+		return x.LifeCycle
+	}
+	return 0
+}
+
 type MapThumbnails struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -31,7 +216,7 @@ type MapThumbnails struct {
 func (x *MapThumbnails) Reset() {
 	*x = MapThumbnails{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_prot_bee_body_map_proto_msgTypes[0]
+		mi := &file_prot_bee_body_map_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -44,7 +229,7 @@ func (x *MapThumbnails) String() string {
 func (*MapThumbnails) ProtoMessage() {}
 
 func (x *MapThumbnails) ProtoReflect() protoreflect.Message {
-	mi := &file_prot_bee_body_map_proto_msgTypes[0]
+	mi := &file_prot_bee_body_map_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57,7 +242,7 @@ func (x *MapThumbnails) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MapThumbnails.ProtoReflect.Descriptor instead.
 func (*MapThumbnails) Descriptor() ([]byte, []int) {
-	return file_prot_bee_body_map_proto_rawDescGZIP(), []int{0}
+	return file_prot_bee_body_map_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *MapThumbnails) GetThumbnails() []*Thumbnail {
@@ -67,17 +252,81 @@ func (x *MapThumbnails) GetThumbnails() []*Thumbnail {
 	return nil
 }
 
+type MapOneDetail struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Thumbnail *Thumbnail `protobuf:"bytes,1,opt,name=thumbnail,proto3" json:"thumbnail,omitempty"`
+}
+
+func (x *MapOneDetail) Reset() {
+	*x = MapOneDetail{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_prot_bee_body_map_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MapOneDetail) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MapOneDetail) ProtoMessage() {}
+
+func (x *MapOneDetail) ProtoReflect() protoreflect.Message {
+	mi := &file_prot_bee_body_map_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MapOneDetail.ProtoReflect.Descriptor instead.
+func (*MapOneDetail) Descriptor() ([]byte, []int) {
+	return file_prot_bee_body_map_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *MapOneDetail) GetThumbnail() *Thumbnail {
+	if x != nil {
+		return x.Thumbnail
+	}
+	return nil
+}
+
 var File_prot_bee_body_map_proto protoreflect.FileDescriptor
 
 var file_prot_bee_body_map_proto_rawDesc = []byte{
 	0x0a, 0x17, 0x70, 0x72, 0x6f, 0x74, 0x5f, 0x62, 0x65, 0x65, 0x5f, 0x62, 0x6f, 0x64, 0x79, 0x5f,
 	0x6d, 0x61, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x07, 0x70, 0x72, 0x6f, 0x74, 0x62,
-	0x65, 0x65, 0x1a, 0x13, 0x70, 0x72, 0x6f, 0x74, 0x5f, 0x62, 0x65, 0x65, 0x5f, 0x62, 0x61, 0x73,
-	0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x43, 0x0a, 0x0d, 0x4d, 0x61, 0x70, 0x54, 0x68,
-	0x75, 0x6d, 0x62, 0x6e, 0x61, 0x69, 0x6c, 0x73, 0x12, 0x32, 0x0a, 0x0a, 0x74, 0x68, 0x75, 0x6d,
-	0x62, 0x6e, 0x61, 0x69, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x70,
-	0x72, 0x6f, 0x74, 0x62, 0x65, 0x65, 0x2e, 0x54, 0x68, 0x75, 0x6d, 0x62, 0x6e, 0x61, 0x69, 0x6c,
-	0x52, 0x0a, 0x74, 0x68, 0x75, 0x6d, 0x62, 0x6e, 0x61, 0x69, 0x6c, 0x73, 0x42, 0x26, 0x0a, 0x0b,
+	0x65, 0x65, 0x22, 0x37, 0x0a, 0x05, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x12, 0x12, 0x0a, 0x04, 0x75,
+	0x73, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x75, 0x73, 0x65, 0x72, 0x12,
+	0x1a, 0x0a, 0x08, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x08, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x22, 0x40, 0x0a, 0x08, 0x4c,
+	0x6f, 0x67, 0x69, 0x6e, 0x41, 0x63, 0x6b, 0x12, 0x12, 0x0a, 0x04, 0x75, 0x73, 0x65, 0x72, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x75, 0x73, 0x65, 0x72, 0x12, 0x20, 0x0a, 0x0b, 0x70,
+	0x65, 0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x09,
+	0x52, 0x0b, 0x70, 0x65, 0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0x66, 0x0a,
+	0x09, 0x54, 0x68, 0x75, 0x6d, 0x62, 0x6e, 0x61, 0x69, 0x6c, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f,
+	0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x12,
+	0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61,
+	0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x6c, 0x69, 0x66, 0x65, 0x5f, 0x63,
+	0x79, 0x63, 0x6c, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x6c, 0x69, 0x66, 0x65,
+	0x43, 0x79, 0x63, 0x6c, 0x65, 0x22, 0x43, 0x0a, 0x0d, 0x4d, 0x61, 0x70, 0x54, 0x68, 0x75, 0x6d,
+	0x62, 0x6e, 0x61, 0x69, 0x6c, 0x73, 0x12, 0x32, 0x0a, 0x0a, 0x74, 0x68, 0x75, 0x6d, 0x62, 0x6e,
+	0x61, 0x69, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x70, 0x72, 0x6f,
+	0x74, 0x62, 0x65, 0x65, 0x2e, 0x54, 0x68, 0x75, 0x6d, 0x62, 0x6e, 0x61, 0x69, 0x6c, 0x52, 0x0a,
+	0x74, 0x68, 0x75, 0x6d, 0x62, 0x6e, 0x61, 0x69, 0x6c, 0x73, 0x22, 0x40, 0x0a, 0x0c, 0x4d, 0x61,
+	0x70, 0x4f, 0x6e, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x12, 0x30, 0x0a, 0x09, 0x74, 0x68,
+	0x75, 0x6d, 0x62, 0x6e, 0x61, 0x69, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e,
+	0x70, 0x72, 0x6f, 0x74, 0x62, 0x65, 0x65, 0x2e, 0x54, 0x68, 0x75, 0x6d, 0x62, 0x6e, 0x61, 0x69,
+	0x6c, 0x52, 0x09, 0x74, 0x68, 0x75, 0x6d, 0x62, 0x6e, 0x61, 0x69, 0x6c, 0x42, 0x26, 0x0a, 0x0b,
 	0x70, 0x72, 0x6f, 0x74, 0x62, 0x65, 0x65, 0x2e, 0x70, 0x62, 0x66, 0x48, 0x03, 0x5a, 0x15, 0x7a,
 	0x6b, 0x2d, 0x61, 0x74, 0x6f, 0x6d, 0x2f, 0x7a, 0x69, 0x70, 0x62, 0x66, 0x2f, 0x70, 0x72, 0x6f,
 	0x74, 0x62, 0x65, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
@@ -95,18 +344,22 @@ func file_prot_bee_body_map_proto_rawDescGZIP() []byte {
 	return file_prot_bee_body_map_proto_rawDescData
 }
 
-var file_prot_bee_body_map_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_prot_bee_body_map_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_prot_bee_body_map_proto_goTypes = []interface{}{
-	(*MapThumbnails)(nil), // 0: protbee.MapThumbnails
-	(*Thumbnail)(nil),     // 1: protbee.Thumbnail
+	(*Login)(nil),         // 0: protbee.Login
+	(*LoginAck)(nil),      // 1: protbee.LoginAck
+	(*Thumbnail)(nil),     // 2: protbee.Thumbnail
+	(*MapThumbnails)(nil), // 3: protbee.MapThumbnails
+	(*MapOneDetail)(nil),  // 4: protbee.MapOneDetail
 }
 var file_prot_bee_body_map_proto_depIdxs = []int32{
-	1, // 0: protbee.MapThumbnails.thumbnails:type_name -> protbee.Thumbnail
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	2, // 0: protbee.MapThumbnails.thumbnails:type_name -> protbee.Thumbnail
+	2, // 1: protbee.MapOneDetail.thumbnail:type_name -> protbee.Thumbnail
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_prot_bee_body_map_proto_init() }
@@ -114,10 +367,57 @@ func file_prot_bee_body_map_proto_init() {
 	if File_prot_bee_body_map_proto != nil {
 		return
 	}
-	file_prot_bee_base_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_prot_bee_body_map_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Login); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_prot_bee_body_map_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LoginAck); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_prot_bee_body_map_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Thumbnail); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_prot_bee_body_map_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MapThumbnails); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_prot_bee_body_map_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MapOneDetail); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -135,7 +435,7 @@ func file_prot_bee_body_map_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_prot_bee_body_map_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

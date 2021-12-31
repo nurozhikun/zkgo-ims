@@ -9,25 +9,31 @@ import (
 
 func NewHttpApi(app *iris.Application, db *amrdb.DB) *AmrHttpApi {
 	a := &AmrHttpApi{
-		app:    app,
-		db:     db,
-		apiMap: ziapi.NewApiMap(db.DB),
+		app:  app,
+		db:   db,
+		apis: &ziapi.IrisBeeApis{},
+		// apiMap: ziapi.NewApiMap(db.DB),
 	}
+	a.apis.InstallApi(ziapi.NewApiMap(db.DB))
 	return a
 }
 
 type AmrHttpApi struct {
-	app    *iris.Application
-	db     *amrdb.DB
-	apiMap *ziapi.ApiMap
+	app *iris.Application
+	db  *amrdb.DB
+	// apiMap *ziapi.ApiMap
+	apis *ziapi.IrisBeeApis
 }
 
 func (a *AmrHttpApi) InstallPath(cmds ...int) {
 	//install map apis
 	party := a.app.Party("/map")
 	{
-		ziapi.InstallIrisBeeHandles(a.apiMap, party,
+		a.apis.InstallBeeHandleByCmds(party,
 			apias.Cmd_MapThumbnails,
 			apias.Cmd_MapOneDetail)
+		// ziapi.InstallIrisBeeHandles(a.apiMap, party,
+		// 	apias.Cmd_MapThumbnails,
+		// 	apias.Cmd_MapOneDetail)
 	}
 }

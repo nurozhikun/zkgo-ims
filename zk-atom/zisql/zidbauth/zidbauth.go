@@ -1,16 +1,16 @@
-package zidbmap
+package zidbauth
 
 import (
 	"gitee.com/sienectagv/gozk/zsql"
+	"github.com/nurozhikun/zkgo-ims/zk-atom/zisql/zidb"
 )
 
 type DB struct {
-	*zsql.DB
+	*zidb.DB
 }
 
 func (db *DB) Migrate() error {
-	err := db.AutoMigrate(&Map{}, &Point{}, &Line{})
-	return err
+	return nil
 }
 
 func (db *DB) ZSqlDB() *zsql.DB {
