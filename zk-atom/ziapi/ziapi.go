@@ -3,12 +3,10 @@ package ziapi
 import (
 	"reflect"
 
-	"gitee.com/sienectagv/gozk/zlogger"
 	"gitee.com/sienectagv/gozk/znet"
 	"gitee.com/sienectagv/gozk/zproto"
 	"gitee.com/sienectagv/gozk/zsql"
 	"gitee.com/sienectagv/gozk/zutils"
-	"github.com/nurozhikun/zkgo-ims/zk-atom/ziapi/apias"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/ziapi/apiauth"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/ziapi/apimap"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/zinet/netirisbee"
@@ -17,8 +15,9 @@ import (
 )
 
 type (
-	ApiAuth = apiauth.ApiAuth
-	ApiMap  = apimap.ApiMap
+	ApiAuth           = apiauth.ApiAuth
+	ApiMap            = apimap.ApiMap
+	BeeResponseMethod = func(h *protbee.Header, req zproto.Message) (zproto.Message, error)
 )
 
 func NewApiAuth(db *zsql.DB) *ApiAuth {
@@ -29,7 +28,10 @@ func NewApiMap(db *zsql.DB) *ApiMap {
 }
 
 type IIrisBeeApi interface {
-	// ProtBeeDb() zisql.IProtBeeDB
+	//the method of cmd must be func(h *protbee.Header, req zproto.Message) (zproto.Message, error)
+	MethodNameOfCmd(cmd int) (string, bool)
+	PathOfCmd(cmd int) (string, bool)
+	ReqBodyOfCmd(cmd int) zproto.Message
 }
 
 type IrisBeeApis struct {
@@ -40,22 +42,22 @@ func (iba *IrisBeeApis) InstallApi(api IIrisBeeApi) {
 	iba.apis = append(iba.apis, api)
 }
 
-func (iba *IrisBeeApis) InstallBeeHandleByCmds(party znet.IrisParty, cmds ...int) {
-	for _, cmd := range cmds {
-		name, ok := zisql.BeeFuncNames[cmd]
-		if !ok {
-			continue
-		}
-		path, ok := apias.CmdPaths[cmd]
-		if !ok {
-			continue
-		}
-		for _, api := range iba.apis {
+func (iba *IrisBeeApis) InstallBeeHandles(party znet.IrisParty, cmds ...int) {
+	for _, api := range iba.apis {
+		for _, cmd := range cmds {
+			name, ok := api.MethodNameOfCmd(cmd)
+			if !ok {
+				continue
+			}
+			path, ok := api.PathOfCmd(cmd)
+			if !ok {
+				continue
+			}
 			fn := BeeHandleByFuncName(api, name)
 			if nil == fn {
 				continue
 			}
-			reqBody := apias.GetBeeReqBodyByCmd(cmd)
+			reqBody := api.ReqBodyOfCmd(cmd)
 			ctxFn := func(ctx znet.IrisCtx) {
 				var resMsg zproto.Message
 				h, err := netirisbee.ParserHeader(ctx) //get header
@@ -79,7 +81,6 @@ func (iba *IrisBeeApis) InstallBeeHandleByCmds(party znet.IrisParty, cmds ...int
 			}
 			party.Post(path, ctxFn)
 			party.Get(path, ctxFn)
-			return
 		}
 	}
 }
@@ -92,21 +93,18 @@ func BeeHandleByFuncName(api interface{}, method string) func(h *protbee.Header,
 	if !value.IsValid() {
 		return nil
 	}
-	zlogger.Info(value)
 	vf := value.MethodByName(method)
 	if !vf.IsValid() {
 		return nil
 	}
-	// zlogger.Info(vf)
+	var beeMethod BeeResponseMethod
+	if vf.Type() != reflect.TypeOf(beeMethod) {
+		return nil
+	}
 	return func(h *protbee.Header, req zproto.Message) (zproto.Message, error) {
 		in := make([]reflect.Value, 2)
 		in[0] = reflect.ValueOf(h)
-		if nil != req {
-			in[1] = reflect.ValueOf(req)
-		} else {
-			in[1] = reflect.New(reflect.TypeOf(req))
-			// zlogger.Info(in[1].IsValid())
-		}
+		in[1] = reflect.ValueOf(req)
 		out := vf.Call(in)
 		if len(out) < 2 {
 			return nil, zutils.NewError(-1, "the response return is wrong")

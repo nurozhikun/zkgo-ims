@@ -2,7 +2,6 @@ package zidb
 
 import (
 	"gitee.com/sienectagv/gozk/zsql"
-	"github.com/nurozhikun/zkgo-ims/zk-atom/ziapi/apias"
 	"gorm.io/gorm"
 )
 
@@ -15,10 +14,3 @@ type Entity struct {
 }
 
 type DB = zsql.DB
-
-var BeeFuncNames = map[int]string{
-	apias.Cmd_AuthLogin:     "BeeMapLogin",
-	apias.Cmd_AuthLogout:    "BeeMapLogout",
-	apias.Cmd_MapThumbnails: "BeeMapThumbnails",
-	apias.Cmd_MapOneDetail:  "BeeMapOneDetail",
-}

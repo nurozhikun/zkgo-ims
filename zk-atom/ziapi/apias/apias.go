@@ -21,7 +21,16 @@ var CmdPaths = map[int]string{
 	Cmd_MapOneDetail:  "/onedetail",
 }
 
-func GetBeeReqBodyByCmd(cmd int) zproto.Message {
+var BeeFuncNames = map[int]string{
+	Cmd_AuthLogin:     "BeeMapLogin",
+	Cmd_AuthLogout:    "BeeMapLogout",
+	Cmd_MapThumbnails: "BeeMapThumbnails",
+	Cmd_MapOneDetail:  "BeeMapOneDetail",
+}
+
+type ApiBase struct{}
+
+func (a *ApiBase) ReqBodyOfCmd(cmd int) zproto.Message {
 	switch cmd {
 	case Cmd_AuthLogin:
 		return &protbee.Login{}
@@ -35,6 +44,15 @@ func GetBeeReqBodyByCmd(cmd int) zproto.Message {
 	default:
 		return nil
 	}
+}
+
+func (a *ApiBase) MethodNameOfCmd(cmd int) (string, bool) {
+	s, ok := BeeFuncNames[cmd]
+	return s, ok
+}
+func (a *ApiBase) PathOfCmd(cmd int) (string, bool) {
+	s, ok := CmdPaths[cmd]
+	return s, ok
 }
 
 // func GetIrisHandle(

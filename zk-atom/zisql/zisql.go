@@ -7,13 +7,8 @@ import (
 	"gitee.com/sienectagv/gozk/zsql"
 	"gitee.com/sienectagv/gozk/zutils"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/zipbf/protbee"
-	"github.com/nurozhikun/zkgo-ims/zk-atom/zisql/zidb"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/zisql/zidbauth"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/zisql/zidbmap"
-)
-
-var (
-	BeeFuncNames = zidb.BeeFuncNames
 )
 
 func WrapupDbMap(db *zsql.DB) *zidbmap.DB {

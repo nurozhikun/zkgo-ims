@@ -1,11 +1,13 @@
 package apimap
 
 import (
+	"github.com/nurozhikun/zkgo-ims/zk-atom/ziapi/apias"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/zisql"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/zisql/zidbmap"
 )
 
 type ApiMap struct {
+	apias.ApiBase
 	*zidbmap.DB //需要用继承
 }
 

@@ -1,11 +1,13 @@
 package apiauth
 
 import (
+	"github.com/nurozhikun/zkgo-ims/zk-atom/ziapi/apias"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/zisql"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/zisql/zidbauth"
 )
 
 type ApiAuth struct {
+	apias.ApiBase
 	*zidbauth.DB
 }
 
