@@ -1,7 +1,7 @@
 # C:/protobuf/bin/protoc.exe -I"./protbee/" --go_out="../../zk-atom/zipbf/protbee" "./protbee/prot_bee_base.proto" 
 $name = "C:/protobuf/bin/protoc.exe "
 $name += ' -I"./protbee/"'
-$name += ' --go_out="../../"'
+$name += ' --dart_out="D:/works/zkflutter/zkfly_ims/lib/pbf/protbee"'
 $name += ' "./protbee/prot_bee_base.proto"'
 $name += ' "./protbee/prot_bee_body.proto"'
 echo $name
