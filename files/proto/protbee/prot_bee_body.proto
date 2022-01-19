@@ -7,6 +7,11 @@ option optimize_for = LITE_RUNTIME;
 option java_package = "protbee.pbf";
 option go_package = "zk-atom/zipbf/protbee";
 
+// //for app config
+// message AppConfig {
+//     string device_code = 1;
+// }
+
 //cmd=1, login, logout
 message UserReq {
     string user = 1;

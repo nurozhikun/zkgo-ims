@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package protbee;
+option optimize_for = LITE_RUNTIME;
+// option java_package = "protbee.pbf";
+option go_package = "zk-atom/zipbf/protbee";
+
+message MobileAppCfg {
+    string code = 1;
+    int64 expired_time = 2;//second
+    message Addr {
+        string addr = 1;
+        int32 port = 2;
+    }
+    Addr galaxy_addr = 3;
+    Addr solar_addr = 4;
+    Addr planet_addr = 5;
+}

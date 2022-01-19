@@ -9,6 +9,7 @@ import (
 func main() {
 	waitGroup := zutils.NewLoopGroup()
 	amr := &zipamr.ZipAmr{}
+	defer amr.FreeAll()
 	// init db
 	cfg := &zsql.Cfg{
 		Type:     zsql.TypeSqlite,
@@ -18,5 +19,4 @@ func main() {
 	amr.InitApi()
 	amr.StartDevices()
 	waitGroup.WaitForEnter("quit")
-	amr.FreeAll()
 }

@@ -28,8 +28,11 @@ message Header {
     int64 body_idx = 7;
 }
 
-message Tailer {
-    int64 code = 1;//0 is success
-    string error = 2;
-}
+// message Tailer {
+//     int64 code = 1;//0 is success
+//     string error = 2;
+// }
+
+
+
 

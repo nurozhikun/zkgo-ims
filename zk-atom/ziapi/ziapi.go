@@ -2,6 +2,7 @@ package ziapi
 
 import (
 	"reflect"
+	"zkgo-ims/zk-atom/ziapi/apias"
 
 	"gitee.com/sienectagv/gozk/znet"
 	"gitee.com/sienectagv/gozk/zproto"
@@ -15,6 +16,7 @@ import (
 )
 
 type (
+	Command           = apias.Command
 	ApiAuth           = apiauth.ApiAuth
 	ApiMap            = apimap.ApiMap
 	BeeResponseMethod = func(h *protbee.Header, req zproto.Message) (zproto.Message, error)
@@ -40,6 +42,41 @@ type IrisBeeApis struct {
 
 func (iba *IrisBeeApis) InstallApi(api IIrisBeeApi) {
 	iba.apis = append(iba.apis, api)
+}
+
+func (iba *IrisBeeApis) InstallBeeHandlerOfCmds(party znet.IrisParty, cmds ...Command) {
+	for _, api := range iba.apis {
+		for _, cmd := range cmds {
+			fn := BeeHandleByFuncName(api, cmd.MethodName)
+			if nil == fn {
+				continue
+			}
+			reqBody := cmd.BeeReqBody()
+			ctxFn := func(ctx znet.IrisCtx) {
+				var resMsg zproto.Message
+				h, err := netirisbee.ParserHeader(ctx) //get header
+				defer func() {
+					netirisbee.SetHeader(ctx, h, err)
+					if nil != resMsg {
+						ctx.Text(zproto.MarshalString(resMsg)) //write to context
+					}
+				}()
+				if nil != err {
+					return
+				}
+				if nil != reqBody {
+					if err = netirisbee.ParseBody(ctx, reqBody); nil != err {
+						return
+					}
+				} else {
+					reqBody = &zproto.EmptyMessage{}
+				}
+				resMsg, err = fn(h, reqBody) //get response data
+			}
+			party.Post(cmd.Path, ctxFn)
+			party.Get(cmd.Path, ctxFn)
+		}
+	}
 }
 
 func (iba *IrisBeeApis) InstallBeeHandles(party znet.IrisParty, cmds ...int) {

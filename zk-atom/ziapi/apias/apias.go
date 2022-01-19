@@ -22,8 +22,8 @@ var CmdPaths = map[int]string{
 }
 
 var BeeFuncNames = map[int]string{
-	Cmd_AuthLogin:     "BeeMapLogin",
-	Cmd_AuthLogout:    "BeeMapLogout",
+	Cmd_AuthLogin:     "BeeAuthLogin",
+	Cmd_AuthLogout:    "BeeAuthLogout",
 	Cmd_MapThumbnails: "BeeMapThumbnails",
 	Cmd_MapOneDetail:  "BeeMapOneDetail",
 }
