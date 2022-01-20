@@ -2,7 +2,8 @@ package ziapi
 
 import (
 	"reflect"
-	"zkgo-ims/zk-atom/ziapi/apias"
+
+	"github.com/nurozhikun/zkgo-ims/zk-atom/ziapi/apias"
 
 	"gitee.com/sienectagv/gozk/znet"
 	"gitee.com/sienectagv/gozk/zproto"

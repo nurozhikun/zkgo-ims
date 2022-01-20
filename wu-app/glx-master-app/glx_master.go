@@ -1,0 +1,29 @@
+package main
+
+import (
+	"gitee.com/sienectagv/gozk/zsql"
+	"github.com/kataras/iris/v12"
+	"github.com/nurozhikun/zkgo-ims/zk-atom/ziapi"
+)
+
+type GlxMaster struct {
+	app *iris.Application
+	dbs map[string]*zsql.DB
+	ziapi.IIrisBeeApi
+}
+
+func NewGlxMaster() *GlxMaster {
+	return &GlxMaster{
+		app: iris.New(),
+		dbs: make(map[string]*zsql.DB),
+	}
+}
+
+func (gm *GlxMaster) AppendDb(name string, cfg *zsql.Cfg) {
+	gm.dbs[name] = zsql.OpenDB(cfg)
+}
+
+func (gm *GlxMaster) DB(name string) *zsql.DB {
+	db, _ := gm.dbs[name]
+	return db
+}

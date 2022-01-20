@@ -1,7 +1,7 @@
 package ziapi
 
 import (
-	"zkgo-ims/zk-atom/zipbf/protbee"
+	"github.com/nurozhikun/zkgo-ims/zk-atom/zipbf/protbee"
 
 	"gitee.com/sienectagv/gozk/zproto"
 )
@@ -24,13 +24,13 @@ func init() {
 	colAuthCommand(Command{
 		Cmd:          CmdAuthLogin,
 		Path:         "/auth/login",
-		MethodName:   "AuthLogin",
+		MethodName:   "BeeAuthLogin",
 		FnBeeReqBody: func() zproto.Message { return &protbee.UserRes{} },
 	})
 	colAuthCommand(Command{
 		Cmd:          CmdAuthLogout,
 		Path:         "/auth/logout",
-		MethodName:   "AuthLogout",
+		MethodName:   "BeeAuthLogout",
 		FnBeeReqBody: func() zproto.Message { return &protbee.UserRes{} },
 	})
 }

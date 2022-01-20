@@ -10,8 +10,8 @@ func (db *DB) ProtBeeResponse(cmd int, h *protbee.Header, res zproto.Message) {
 
 }
 
-func (db *DB) BeeMapLogin(header *zipbf.BeeHeader, reqBody zproto.Message) (zproto.Message, error) {
-	body := &protbee.LoginAck{}
+func (db *DB) BeeAuthLogin(header *zipbf.BeeHeader, reqBody zproto.Message) (zproto.Message, error) {
+	body := &protbee.UserRes{}
 	//TODO
 	return body, nil
 }

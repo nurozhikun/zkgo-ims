@@ -33,7 +33,7 @@ type ApiBase struct{}
 func (a *ApiBase) ReqBodyOfCmd(cmd int) zproto.Message {
 	switch cmd {
 	case Cmd_AuthLogin:
-		return &protbee.Login{}
+		return &protbee.UserReq{}
 	case Cmd_AuthLogout:
 		// return &protbee.Logout{}
 		return nil
@@ -54,28 +54,3 @@ func (a *ApiBase) PathOfCmd(cmd int) (string, bool) {
 	s, ok := CmdPaths[cmd]
 	return s, ok
 }
-
-// func GetIrisHandle(
-// 	reqBody zproto.Message,
-// 	fn func(h *zipbf.BeeHeader, reqBody zproto.Message) (zproto.Message, error),
-// ) func(ctx znet.IrisCtx) {
-// 	return func(ctx znet.IrisCtx) {
-// 		var resMsg zproto.Message
-// 		h, err := netirisbee.ParserHeader(ctx) //get header
-// 		defer func() {
-// 			netirisbee.SetHeader(ctx, h, err)
-// 			if nil != resMsg {
-// 				ctx.Text(zproto.MarshalString(resMsg)) //write to context
-// 			}
-// 		}()
-// 		if nil != err {
-// 			return
-// 		}
-// 		if nil != reqBody {
-// 			if err = netirisbee.ParseBody(ctx, reqBody); nil != err {
-// 				return
-// 			}
-// 		}
-// 		resMsg, err = fn(h, reqBody) //get response data
-// 	}
-// }
