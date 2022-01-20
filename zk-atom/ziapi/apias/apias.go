@@ -6,10 +6,10 @@ import (
 )
 
 const (
-	//for apiauth
+	// for apiauth
 	Cmd_AuthLogin  = 1
 	Cmd_AuthLogout = 2
-	//for apimaps
+	// for apimaps
 	Cmd_MapThumbnails = 1001
 	Cmd_MapOneDetail  = 1002
 )
@@ -50,6 +50,7 @@ func (a *ApiBase) MethodNameOfCmd(cmd int) (string, bool) {
 	s, ok := BeeFuncNames[cmd]
 	return s, ok
 }
+
 func (a *ApiBase) PathOfCmd(cmd int) (string, bool) {
 	s, ok := CmdPaths[cmd]
 	return s, ok

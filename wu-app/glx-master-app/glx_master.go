@@ -9,7 +9,7 @@ import (
 type GlxMaster struct {
 	app *iris.Application
 	dbs map[string]*zsql.DB
-	ziapi.IIrisBeeApi
+	ziapi.IrisBeeApis
 }
 
 func NewGlxMaster() *GlxMaster {

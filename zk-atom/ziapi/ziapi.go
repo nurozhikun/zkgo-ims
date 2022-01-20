@@ -73,6 +73,7 @@ func (iba *IrisBeeApis) InstallBeeHandlerOfCmds(party znet.IrisParty, cmds ...Co
 					reqBody = &zproto.EmptyMessage{}
 				}
 				resMsg, err = fn(h, reqBody) //get response data
+				ctx.Next()
 			}
 			party.Post(cmd.Path, ctxFn)
 			party.Get(cmd.Path, ctxFn)

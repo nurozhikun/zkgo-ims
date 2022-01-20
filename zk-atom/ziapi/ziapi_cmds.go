@@ -23,13 +23,13 @@ func init() {
 	//auth command
 	colAuthCommand(Command{
 		Cmd:          CmdAuthLogin,
-		Path:         "/auth/login",
+		Path:         "login",
 		MethodName:   "BeeAuthLogin",
 		FnBeeReqBody: func() zproto.Message { return &protbee.UserRes{} },
 	})
 	colAuthCommand(Command{
 		Cmd:          CmdAuthLogout,
-		Path:         "/auth/logout",
+		Path:         "logout",
 		MethodName:   "BeeAuthLogout",
 		FnBeeReqBody: func() zproto.Message { return &protbee.UserRes{} },
 	})
