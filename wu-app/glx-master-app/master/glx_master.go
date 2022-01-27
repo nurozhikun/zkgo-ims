@@ -1,4 +1,4 @@
-package main
+package master
 
 import (
 	"gitee.com/sienectagv/gozk/zsql"
@@ -7,14 +7,14 @@ import (
 )
 
 type GlxMaster struct {
-	app *iris.Application
+	App *iris.Application
 	dbs map[string]*zsql.DB
 	ziapi.IrisBeeApis
 }
 
 func NewGlxMaster() *GlxMaster {
 	return &GlxMaster{
-		app: iris.New(),
+		App: iris.New(),
 		dbs: make(map[string]*zsql.DB),
 	}
 }

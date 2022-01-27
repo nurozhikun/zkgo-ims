@@ -5,6 +5,7 @@ import (
 
 	"github.com/nurozhikun/zkgo-ims/zk-atom/ziapi/apias"
 
+	"gitee.com/sienectagv/gozk/zlogger"
 	"gitee.com/sienectagv/gozk/znet"
 	"gitee.com/sienectagv/gozk/zproto"
 	"gitee.com/sienectagv/gozk/zsql"
@@ -26,12 +27,13 @@ type (
 func NewApiAuth(db *zsql.DB) *ApiAuth {
 	return &ApiAuth{DB: zisql.WrapupDbAuth(db)}
 }
+
 func NewApiMap(db *zsql.DB) *ApiMap {
 	return &ApiMap{DB: zisql.WrapupDbMap(db)}
 }
 
 type IIrisBeeApi interface {
-	//the method of cmd must be func(h *protbee.Header, req zproto.Message) (zproto.Message, error)
+	// the method of cmd must be func(h *protbee.Header, req zproto.Message) (zproto.Message, error)
 	MethodNameOfCmd(cmd int) (string, bool)
 	PathOfCmd(cmd int) (string, bool)
 	ReqBodyOfCmd(cmd int) zproto.Message
@@ -55,24 +57,33 @@ func (iba *IrisBeeApis) InstallBeeHandlerOfCmds(party znet.IrisParty, cmds ...Co
 			reqBody := cmd.BeeReqBody()
 			ctxFn := func(ctx znet.IrisCtx) {
 				var resMsg zproto.Message
-				h, err := netirisbee.ParserHeader(ctx) //get header
+				h, err := netirisbee.ParserHeader(ctx) // get header
 				defer func() {
 					netirisbee.SetHeader(ctx, h, err)
 					if nil != resMsg {
-						ctx.Text(zproto.MarshalString(resMsg)) //write to context
+						// 写入字符串(实质为json)
+						ctx.Text(zproto.MarshalString(resMsg)) // write to context
+					}
+					// 判断返回值是不是nil
+					if nil == resMsg {
+						ctx.Text("nil return")
+					}
+					if err != nil {
+						zlogger.Error(err)
 					}
 				}()
 				if nil != err {
 					return
 				}
 				if nil != reqBody {
+					// 请求参数一定要准确
 					if err = netirisbee.ParseBody(ctx, reqBody); nil != err {
 						return
 					}
 				} else {
 					reqBody = &zproto.EmptyMessage{}
 				}
-				resMsg, err = fn(h, reqBody) //get response data
+				resMsg, err = fn(h, reqBody) // get response data
 				ctx.Next()
 			}
 			party.Post(cmd.Path, ctxFn)
@@ -99,11 +110,11 @@ func (iba *IrisBeeApis) InstallBeeHandles(party znet.IrisParty, cmds ...int) {
 			reqBody := api.ReqBodyOfCmd(cmd)
 			ctxFn := func(ctx znet.IrisCtx) {
 				var resMsg zproto.Message
-				h, err := netirisbee.ParserHeader(ctx) //get header
+				h, err := netirisbee.ParserHeader(ctx) // get header
 				defer func() {
 					netirisbee.SetHeader(ctx, h, err)
 					if nil != resMsg {
-						ctx.Text(zproto.MarshalString(resMsg)) //write to context
+						ctx.Text(zproto.MarshalString(resMsg)) // write to context
 					}
 				}()
 				if nil != err {
@@ -116,7 +127,7 @@ func (iba *IrisBeeApis) InstallBeeHandles(party znet.IrisParty, cmds ...int) {
 				} else {
 					reqBody = &zproto.EmptyMessage{}
 				}
-				resMsg, err = fn(h, reqBody) //get response data
+				resMsg, err = fn(h, reqBody) // get response data
 			}
 			party.Post(path, ctxFn)
 			party.Get(path, ctxFn)

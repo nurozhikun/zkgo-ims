@@ -20,16 +20,16 @@ var (
 )
 
 func init() {
-	//auth command
+	// auth command
 	colAuthCommand(Command{
 		Cmd:          CmdAuthLogin,
-		Path:         "login",
+		Path:         "/login",
 		MethodName:   "BeeAuthLogin",
 		FnBeeReqBody: func() zproto.Message { return &protbee.UserRes{} },
 	})
 	colAuthCommand(Command{
 		Cmd:          CmdAuthLogout,
-		Path:         "logout",
+		Path:         "/logout",
 		MethodName:   "BeeAuthLogout",
 		FnBeeReqBody: func() zproto.Message { return &protbee.UserRes{} },
 	})

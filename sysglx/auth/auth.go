@@ -35,12 +35,13 @@ func (a *Auth) InitApi(cmds ...int) *Auth {
 		return a
 	}
 	a.apis.InstallApi(ziapi.NewApiAuth(a.db.DB))
+	a.InstallPath(cmds...)
 	return a
 }
 
 func (a *Auth) InstallPath(cmds ...int) {
-	authParty := a.App.Party("/auth")
-	{
-		a.apis.InstallBeeHandles(authParty, cmds...)
-	}
+	// authParty := a.App.Party("/auth")
+	// {
+	// 	a.apis.InstallBeeHandles(authParty, cmds...)
+	// }
 }

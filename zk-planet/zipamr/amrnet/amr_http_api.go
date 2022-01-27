@@ -25,7 +25,7 @@ type AmrHttpApi struct {
 }
 
 func (a *AmrHttpApi) InstallPath(cmds ...int) {
-	//install map apis' handlers
+	// install map apis' handlers
 	party := a.app.Party("/map")
 	{
 		a.apis.InstallBeeHandles(party,
