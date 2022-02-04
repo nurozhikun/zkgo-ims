@@ -30,7 +30,7 @@ func SetHeader(ctx znet.IrisCtx, header *zipbf.BeeHeader, err error) {
 		if nil != err {
 			zipbf.SetBeeHeaderError(header, err)
 		}
-		header.Timestamp = time.Now().UTC().UnixMilli()
+		header.Timestamp = time.Now().UTC().Unix()
 		if netas.UseBase64 {
 			js := zproto.MarshalString(header)
 			s := base64.StdEncoding.EncodeToString([]byte(js))
@@ -52,7 +52,7 @@ func SetHeader(ctx znet.IrisCtx, header *zipbf.BeeHeader, err error) {
 
 func CopyHeader(ctx znet.IrisCtx) {
 	znet.IrisCopyHeaderKeys(ctx, netas.HKeyCmd, netas.HKeyJwt)
-	t := time.Now().UTC().UnixMilli()
+	t := time.Now().UTC().Unix()
 	ctx.Header(netas.HKeyTimestamp, zutils.StringFromInterface(t))
 }
 

@@ -22,10 +22,11 @@ var (
 func init() {
 	// auth command
 	colAuthCommand(Command{
-		Cmd:          CmdAuthLogin,
-		Path:         "/login",
-		MethodName:   "BeeAuthLogin",
-		FnBeeReqBody: func() zproto.Message { return &protbee.UserRes{} },
+		Cmd:        CmdAuthLogin,
+		Path:       "/login",
+		MethodName: "BeeAuthLogin",
+		// 这里出错，应该使用UserReq{}
+		FnBeeReqBody: func() zproto.Message { return &protbee.UserReq{} },
 	})
 	colAuthCommand(Command{
 		Cmd:          CmdAuthLogout,

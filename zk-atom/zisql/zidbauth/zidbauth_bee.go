@@ -23,8 +23,6 @@ func (db *DB) BeeAuthLogin(header *zipbf.BeeHeader, reqBody zproto.Message) (mes
 		}
 	}()
 
-	// TODO 还需要检查reqBody怎么使用
-
 	req, ok := reqBody.(*protbee.UserReq)
 	if !ok {
 		return nil, errors.New("input type error, need UserReq")
