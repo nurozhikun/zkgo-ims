@@ -4,13 +4,14 @@ import (
 	"gitee.com/sienectagv/gozk/zlogger"
 	"gitee.com/sienectagv/gozk/zsql"
 	"gitee.com/sienectagv/gozk/zutils"
-	"github.com/nurozhikun/zkgo-ims/sutils"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/zisql/zidb"
 )
 
 type DB struct {
 	*zidb.DB
 }
+
+// 保存一个authDB 如果此处不预留authDB 则需要从接口入手
 
 func CreateDB(cfg *zsql.Cfg) *DB {
 	db := &DB{DB: zsql.OpenDB(cfg)}
@@ -51,21 +52,29 @@ func (db *DB) ZSqlDB() *zsql.DB {
 	return db.DB
 }
 
-func (db *DB) CheckInUser(user, password string) (*User, error) {
-	row := &User{}
-	result := db.Where("name = ?", user).Find(row)
+func (db *DB) CheckInUser(username, password string) (*User, error) {
+	user := &User{}
+	result := db.Where("name = ?", username).Find(user)
 	if result.RowsAffected == 0 {
 		return nil, zutils.ErrUserOrPassMiss
 	}
 
-	if err := db.Model(row).Association("Roles").Find(&(row.Roles)); err != nil {
+	// 关联模式
+	if err := db.Model(user).Association("Roles").Find(&(user.Roles)); err != nil {
 		zlogger.Error(err)
 		return nil, err
 	}
 
-	err := sutils.SaltPassCheck(user, password, row.Salt, row.Password)
+	// 填充permissions
+	for _, v := range user.Roles {
+		if err := db.Model(v).Association("Permissions").Find(&(v.Permissions)); err != nil {
+			zlogger.Error(err)
+			return nil, err
+		}
+	}
+	err := zidb.SaltPassCheck(username, password, user.Salt, user.Password)
 	if nil != err {
 		return nil, err
 	}
-	return row, nil
+	return user, nil
 }

@@ -16,6 +16,7 @@ func WrapupDbMap(db *zsql.DB) *zidbmap.DB {
 }
 
 func WrapupDbAuth(db *zsql.DB) *zidbauth.DB {
+	zidbauth.SetJwtDB(&zidbauth.DB{DB: db})
 	return &zidbauth.DB{DB: db}
 }
 

@@ -34,8 +34,8 @@ type Role struct {
 	// Deleted     int32  `gorm:"type:tinyint(1);not null;default 0;"`
 	Level       int32 `gorm:"not null; default 0;"` // 简单模式可以只用level来控制权限
 	ParentID    *uint
-	Parent      *Role        //`gorm:"foreignkey:ParentID; constraint:OnUpdate:CASCADE, OnDelete:SET NULL;"`
-	Permissions []Permission `gorm:"many2many:role_permissions"`
+	Parent      *Role         //`gorm:"foreignkey:ParentID; constraint:OnUpdate:CASCADE, OnDelete:SET NULL;"`
+	Permissions []*Permission `gorm:"many2many:role_permissions"`
 }
 
 type Permission struct {

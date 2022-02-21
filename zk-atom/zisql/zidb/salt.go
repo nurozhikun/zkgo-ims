@@ -1,4 +1,4 @@
-package sutils
+package zidb
 
 import (
 	"bytes"

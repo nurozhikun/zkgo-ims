@@ -1,9 +1,11 @@
 package ziapi
 
 import (
+	"errors"
 	"reflect"
 
 	"github.com/nurozhikun/zkgo-ims/zk-atom/ziapi/apias"
+	"github.com/nurozhikun/zkgo-ims/zk-atom/zisql/zidbauth"
 
 	"gitee.com/sienectagv/gozk/zlogger"
 	"gitee.com/sienectagv/gozk/znet"
@@ -55,9 +57,15 @@ func (iba *IrisBeeApis) InstallBeeHandlerOfCmds(party znet.IrisParty, cmds ...Co
 				continue
 			}
 			reqBody := cmd.BeeReqBody()
+			Cmd := cmd.Cmd
 			ctxFn := func(ctx znet.IrisCtx) {
 				var resMsg zproto.Message
 				h, err := netirisbee.ParserHeader(ctx) // get header
+				if nil != err {
+					zlogger.Error(err)
+					return
+				}
+
 				defer func() {
 					netirisbee.SetHeader(ctx, h, err)
 					if nil != resMsg {
@@ -69,19 +77,30 @@ func (iba *IrisBeeApis) InstallBeeHandlerOfCmds(party znet.IrisParty, cmds ...Co
 						ctx.Text("nil return")
 					}
 					if err != nil {
-						zlogger.Error(err)
+						h.Error = err.Error()
+						h.Code = -1
 					}
 				}()
-				if nil != err {
-					return
+
+				// 根据接口CMD 做authCheck
+				if Cmd != CmdAuthLogin {
+					// 除登录外都需要authCheck
+					// h.Jwt AuthCheck(逻辑未 通过则放行 未通过从数据库拉取确认一遍)
+					if !zidbauth.JwtAuthCheck(h, ctx) {
+						err = errors.New("the path is not permitted")
+						zlogger.Error(err)
+						return
+					}
 				}
+
 				if nil != reqBody {
 					// 请求参数一定要准确
 					if err = netirisbee.ParseBody(ctx, reqBody); nil != err {
+						zlogger.Error(err)
 						return
 					}
 				} else {
-					reqBody = &zproto.EmptyMessage{}
+					reqBody = &protbee.EmptyMessage{}
 				}
 				resMsg, err = fn(h, reqBody) // get response data
 				ctx.Next()

@@ -33,6 +33,7 @@ message Header {
 //     string error = 2;
 // }
 
+message EmptyMessage {}
 
 
 

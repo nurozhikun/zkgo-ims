@@ -12,7 +12,7 @@ option go_package = "zk-atom/zipbf/protbee";
 //     string device_code = 1;
 // }
 
-//cmd=1, login, logout
+//cmd=1, login, cmd=2, logout
 message UserReq {
     string user = 1;
     string password = 2;
@@ -40,3 +40,41 @@ message MapThumbnails {
 message MapOneDetail {
     Thumbnail thumbnail = 1;
 }
+
+// cmd=3, /test
+message Test {
+    string test = 1;
+}
+
+// cmd=4 /get_users
+message UsersReq{}
+
+message UsersRes {
+    repeated UserRes users = 1;
+}
+
+// cmd=5 /get_roles
+message Role {
+    int64 id = 1;
+    string code = 2;
+    string name = 3;
+}
+
+message RolesReq{}
+
+message RolesRes {
+    repeated Role roles = 1;
+}
+
+// cmd=6 /manage_user 添加用户
+// cmd=7 /manage_user 删除用户
+// cmd=8 /manage_user 更新用户
+message ManageUserReq {
+    int64 id = 1;
+    string user = 2;
+    string password = 3;
+    string mobile = 4;
+    repeated Role roles = 5;
+}
+
+message ManageUserRes{}
