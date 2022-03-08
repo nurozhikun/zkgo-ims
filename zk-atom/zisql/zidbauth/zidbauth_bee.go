@@ -8,6 +8,7 @@ import (
 	"github.com/nurozhikun/zkgo-ims/zk-atom/zipbf"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/zipbf/protbee"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/zisql/zidb"
+	"gorm.io/gorm"
 )
 
 // 暂未使用
@@ -99,7 +100,7 @@ func (db *DB) BeeGetRoles(header *zipbf.BeeHeader, reqBody zproto.Message) (mess
 	}
 	protRoles := protbee.RolesRes{}
 	for _, v := range roles {
-		protRoles = append(protRoles.Roles, &protbee.Role{
+		protRoles.Roles = append(protRoles.Roles, &protbee.Role{
 			Id:   int64(v.Model.ID),
 			Code: v.Code,
 			Name: v.Name,
@@ -121,23 +122,23 @@ func (db *DB) BeeAddUser(header *zipbf.BeeHeader, reqBody zproto.Message) (messa
 		return nil, errors.New("input type error, need ManageUserReq")
 	}
 	if userReq.User == "" {
-		return nil, return errors.New("name is nil")
+		return nil, errors.New("name is nil")
 	}
 	if userReq.Password == "" {
 		userReq.Password = "sienect"
 	}
 	sum, salt, _ := zidb.SaltPassCreate(userReq.User, userReq.Password)
 	user := User{
-		Name: userReq.User,
+		Name:     userReq.User,
 		Password: sum,
-		Mobile: userReq.Mobile,
-		Salt: salt,
+		Mobile:   userReq.Mobile,
+		Salt:     salt,
 	}
 	roles := []*Role{}
-	for _, v := range reqBody.User.Roles {
+	for _, v := range userReq.Roles {
 		roles = append(roles, &Role{
 			Model: gorm.Model{
-				ID: unit(v.ID),
+				ID: uint(v.Id),
 			},
 			Name: v.Name,
 			Code: v.Code,
@@ -162,7 +163,7 @@ func (db *DB) BeeDelUser(header *zipbf.BeeHeader, reqBody zproto.Message) (messa
 	if !ok {
 		return nil, errors.New("input type error, need ManageUserReq")
 	}
-	if err := db.Where("name = ?", userReq.User).Delete(&User{}); err != nil {
+	if err := db.Where("name = ?", userReq.User).Delete(&User{}).Error; err != nil {
 		return nil, err
 	}
 	return &protbee.ManageUserRes{}, nil
