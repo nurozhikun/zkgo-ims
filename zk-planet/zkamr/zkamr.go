@@ -1,11 +1,11 @@
-package zipamr
+package zkamr
 
 import (
 	"gitee.com/sienectagv/gozk/zdev"
 	"gitee.com/sienectagv/gozk/zsql"
 	"github.com/kataras/iris/v12"
-	"github.com/nurozhikun/zkgo-ims/zk-planet/zipamr/amrdb"
-	"github.com/nurozhikun/zkgo-ims/zk-planet/zipamr/amrnet"
+	"github.com/nurozhikun/zkgo-ims/zk-planet/zkamr/amrdb"
+	"github.com/nurozhikun/zkgo-ims/zk-planet/zkamr/amrnet"
 )
 
 const (
@@ -13,7 +13,7 @@ const (
 	DeviceID_tcpListener = "tcp_listener"
 )
 
-type ZipAmr struct {
+type ZkAmr struct {
 	// AddrTcpListener string
 	zdev.Vessel
 	App *iris.Application
@@ -21,12 +21,12 @@ type ZipAmr struct {
 	api *amrnet.AmrHttpApi
 }
 
-func (amr *ZipAmr) InitDB(cfg *zsql.Cfg) *ZipAmr {
+func (amr *ZkAmr) InitDB(cfg *zsql.Cfg) *ZkAmr {
 	amr.db = amrdb.CreateDB(cfg)
 	return amr
 }
 
-func (amr *ZipAmr) InitApi(cmds ...int) *ZipAmr {
+func (amr *ZkAmr) InitApi(cmds ...int) *ZkAmr {
 	// irisApp := iris.New()
 	if nil == amr.App {
 		amr.App = iris.New()
@@ -36,7 +36,7 @@ func (amr *ZipAmr) InitApi(cmds ...int) *ZipAmr {
 	return amr
 }
 
-func (amr *ZipAmr) StartDevices() *ZipAmr {
+func (amr *ZkAmr) StartDevices() *ZkAmr {
 	amr.start()
 	//append the deivce of iris application
 	if nil != amr.App {
@@ -60,14 +60,14 @@ func (amr *ZipAmr) StartDevices() *ZipAmr {
 	return amr
 }
 
-func (amr *ZipAmr) FreeAll() {
+func (amr *ZkAmr) FreeAll() {
 	amr.stop()
 	if nil != amr.db {
 		amr.db.DeleteDB()
 	}
 }
 
-func (amr *ZipAmr) start() {
+func (amr *ZkAmr) start() {
 	// amr.Vessel.FnCreateCustom = func(code int64, cmd *zdev.Command) zdev.ICustom {
 	// 	return nil
 	// }
@@ -77,6 +77,6 @@ func (amr *ZipAmr) start() {
 	amr.Vessel.Start()
 }
 
-func (amr *ZipAmr) stop() {
+func (amr *ZkAmr) stop() {
 	amr.Vessel.Close()
 }

@@ -34,7 +34,7 @@ func (a *Auth) InitApi(cmds ...int) *Auth {
 		zlogger.Error("db is nil")
 		return a
 	}
-	a.apis.InstallApi(ziapi.NewApiAuth(a.db.DB))
+	// a.apis.InstallApi(ziapi.NewApiAuth(a.db.DB))
 	a.InstallPath(cmds...)
 	return a
 }

@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"gitee.com/sienectagv/gozk/zsql"
-	"github.com/nurozhikun/zkgo-ims/wu-app/glx-master-app/master"
+	"github.com/nurozhikun/zkgo-ims/wu-app/ap-glx-beehome/master"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/ziapi"
 
 	"gitee.com/sienectagv/gozk/zutils"

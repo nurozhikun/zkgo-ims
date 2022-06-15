@@ -8,13 +8,21 @@ import (
 )
 
 type DB struct {
-	*zidb.DB
+	// *zidb.DB
+	zidb.Base
+}
+
+func (db *DB) ZSqlDB() *zsql.DB {
+	return db.DB
 }
 
 // 保存一个authDB 如果此处不预留authDB 则需要从接口入手
 
 func CreateDB(cfg *zsql.Cfg) *DB {
-	db := &DB{DB: zsql.OpenDB(cfg)}
+	// db := &DB{DB: zsql.OpenDB(cfg)}
+	// db := &DB{DB: zsql.OpenDB(cfg)}
+	db := &DB{}
+	db.DB = zsql.OpenDB(cfg)
 	if db.DB == nil {
 		zlogger.Error("create db failed")
 		return nil
@@ -46,10 +54,6 @@ func (db *DB) Migrate() error {
 		return err
 	}
 	return nil
-}
-
-func (db *DB) ZSqlDB() *zsql.DB {
-	return db.DB
 }
 
 func (db *DB) CheckInUser(username, password string) (*User, error) {

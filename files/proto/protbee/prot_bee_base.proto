@@ -17,6 +17,12 @@ message Point3F {
     float z = 3;
 }
 
+message Entity {
+    int64 id = 1;
+    string code = 2;
+    string name = 3;
+}
+
 //for http request and response
 message Header {
     int64 cmd = 1;

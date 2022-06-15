@@ -4,7 +4,7 @@ import (
 	"github.com/kataras/iris/v12"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/ziapi"
 	"github.com/nurozhikun/zkgo-ims/zk-atom/ziapi/apias"
-	"github.com/nurozhikun/zkgo-ims/zk-planet/zipamr/amrdb"
+	"github.com/nurozhikun/zkgo-ims/zk-planet/zkamr/amrdb"
 )
 
 func NewHttpApi(app *iris.Application, db *amrdb.DB) *AmrHttpApi {

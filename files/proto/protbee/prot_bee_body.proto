@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-// import "prot_bee_base.proto";
+import "prot_bee_base.proto";
 
 package protbee;
 option optimize_for = LITE_RUNTIME;
@@ -25,21 +25,7 @@ message UserRes {
     int64 expired_time = 5;
 }
 
-//thumbnail
-message Thumbnail {
-    string code = 1;
-    string name = 2;
-    int32 type = 3;
-    int32 life_cycle = 4;
-}
 
-message MapThumbnails {
-    repeated Thumbnail thumbnails = 1;
-}
-
-message MapOneDetail {
-    Thumbnail thumbnail = 1;
-}
 
 // cmd=3, /test
 message Test {
@@ -78,3 +64,26 @@ message ManageUserReq {
 }
 
 message ManageUserRes{}
+
+
+//thumbnail
+message Thumbnail {
+    string code = 1;
+    string name = 2;
+    int32 type = 3;
+    int32 life_cycle = 4;
+}
+
+
+//cmd = 100
+message MapList {
+    repeated Entity maps = 1;
+    
+}
+message MapThumbnails {
+    repeated Thumbnail thumbnails = 1;
+}
+
+message MapOneDetail {
+    Thumbnail thumbnail = 1;
+}

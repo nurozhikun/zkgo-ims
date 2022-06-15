@@ -3,12 +3,12 @@ package main
 import (
 	"gitee.com/sienectagv/gozk/zsql"
 	"gitee.com/sienectagv/gozk/zutils"
-	"github.com/nurozhikun/zkgo-ims/zk-planet/zipamr"
+	"github.com/nurozhikun/zkgo-ims/zk-planet/zkamr"
 )
 
 func main() {
 	waitGroup := zutils.NewLoopGroup()
-	amr := &zipamr.ZipAmr{}
+	amr := &zkamr.ZkAmr{}
 	defer amr.FreeAll()
 	// init db
 	cfg := &zsql.Cfg{
